@@ -54,7 +54,7 @@ void forward(unsigned short arr)//@TODO:未使用pid调节，
 		motor(R1,FORWARD,arr);
 		motor(L2,FORWARD,arr);
 		motor(R2,FORWARD,arr);
-		if (Ray_cap == 0xe ){
+		/*if (Ray_cap == 0xe ){
         //往右一点
 			motor(L1,FORWARD,arr);
 			motor(R1,FORWARD,arr/1.5);
@@ -81,7 +81,7 @@ void forward(unsigned short arr)//@TODO:未使用pid调节，
 			motor(R1,FORWARD,arr);
 			motor(L2,FORWARD,arr/2);
 			motor(R2,FORWARD,arr);
-    }
+    }*/
 }
 void left(unsigned short arr)
 {

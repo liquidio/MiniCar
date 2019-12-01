@@ -17,7 +17,7 @@
 #define ARR 1000//@TODO:default;
 #define PSC 71//@TODO:default;
 #define K_deg 1//@TODO:default;
-#define K_VELOCITY 1
+#define K_VELOCITY 10
 //control.c
 #define SLOW_SPEED 0 //@TODO:DEFAULT,需要填写一个合适的值;
 #define MEDIUM_SPEED 50
