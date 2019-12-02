@@ -2,8 +2,10 @@
 #include "motor.h"
 #include "config.h"
 #include "delay.h"
+#include "ray.h"
 RunStatus Run_status;
-extern char Ray_cap;
+extern u8 Ray_cap;
+extern u8 ray,ray1,ray2,ray3;
 extern PStack goal;
 /**************
 *状态检测RunStatus
@@ -48,40 +50,40 @@ void into_track(void)
 /****************************
  * 方向控制，motor的包装
  * */
-void forward(u8 arr)//@TODO:未使用pid调节，
-{		
+static void offset_r(u8 arr){
+				motor(L1,FORWARD,arr);
+		motor(R1,FORWARD,0);
+		motor(L2,FORWARD,arr);
+		motor(R2,FORWARD,0);
+}
+static void offset_l(u8 arr){
+		motor(R1,FORWARD,arr);
+		motor(L1,FORWARD,0);
+		motor(R2,FORWARD,arr);
+		motor(L2,FORWARD,0);
+}
+static void offset_on(u8 arr){
 		motor(L1,FORWARD,arr);
 		motor(R1,FORWARD,arr);
 		motor(L2,FORWARD,arr);
 		motor(R2,FORWARD,arr);
-		if (Ray_cap == 0xe ){
-        //往右一点
-			motor(L1,FORWARD,arr);
-			motor(R1,FORWARD,arr/1.5);
-			motor(L2,FORWARD,arr);
-			motor(R2,FORWARD,arr/1.5);
-    }
-    if (Ray_cap == 0xc){
-        //往右多一点
-			motor(L1,FORWARD,arr);
-			motor(R1,FORWARD,arr/2);
-			motor(L2,FORWARD,arr);
-			motor(R2,FORWARD,arr/2);
-    }
-    if (Ray_cap == 0x7){
-        //往左一点
-			motor(L1,FORWARD,arr/1.5);
-			motor(R1,FORWARD,arr);
-			motor(L2,FORWARD,arr/1.5);
-			motor(R2,FORWARD,arr);
-    }
-    if (Ray_cap == 0x3){
-        //往左多一点
-			motor(L1,FORWARD,arr/2);
-			motor(R1,FORWARD,arr);
-			motor(L2,FORWARD,arr/2);
-			motor(R2,FORWARD,arr);
-    }
+}
+void forward(u8 arr)//@TODO:未使用pid调节，
+{	
+	ray_scan();
+	if(!ray1 && !ray2){
+		offset_on(arr);
+		
+	}
+	if (!ray1 && ray2){
+		offset_l(arr);
+	}
+	if (ray1 && !ray2){
+		offset_r(arr);
+	}
+	if (!ray && !ray3){
+		right(arr);
+	}
 }
 void left(u8 arr)
 {
