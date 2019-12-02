@@ -15,5 +15,5 @@ typedef enum{
 }Dir;
 
 void motor_config(void);
-void motor(Motor motor_n,Dir dir,u8 arr);
+void motor(Motor motor_n,Dir dir,u16 arr);
 #endif

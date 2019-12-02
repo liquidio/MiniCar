@@ -1,7 +1,7 @@
 #include "control.h"
 #include "motor.h"
 #include "config.h"
-
+#include "delay.h"
 RunStatus Run_status;
 extern char Ray_cap;
 extern PStack goal;
@@ -48,13 +48,13 @@ void into_track(void)
 /****************************
  * 方向控制，motor的包装
  * */
-void forward(unsigned short arr)//@TODO:未使用pid调节，
+void forward(u8 arr)//@TODO:未使用pid调节，
 {		
 		motor(L1,FORWARD,arr);
 		motor(R1,FORWARD,arr);
 		motor(L2,FORWARD,arr);
 		motor(R2,FORWARD,arr);
-		/*if (Ray_cap == 0xe ){
+		if (Ray_cap == 0xe ){
         //往右一点
 			motor(L1,FORWARD,arr);
 			motor(R1,FORWARD,arr/1.5);
@@ -81,23 +81,25 @@ void forward(unsigned short arr)//@TODO:未使用pid调节，
 			motor(R1,FORWARD,arr);
 			motor(L2,FORWARD,arr/2);
 			motor(R2,FORWARD,arr);
-    }*/
+    }
 }
-void left(unsigned short arr)
+void left(u8 arr)
 {
-		motor(L1,FORWARD,arr/3);
-		motor(R1,FORWARD,arr/1.5);
-		motor(L2,FORWARD,arr/3);
-		motor(R2,FORWARD,arr/1.5);
+		motor(L1,REVERSE,arr);
+		motor(R1,FORWARD,arr);
+		motor(L2,REVERSE,arr);
+		motor(R2,FORWARD,arr);
+	delay_ms(670);//空车转90,不带抓
 }
-void right(unsigned short arr)
+void right(u8 arr)
 {
-		motor(L1,FORWARD,arr/1.5);
-		motor(R1,FORWARD,arr/3);
-		motor(L2,FORWARD,arr/1.5);
-		motor(R2,FORWARD,arr/3);
+		motor(R1,REVERSE,arr);
+		motor(L1,FORWARD,arr);
+		motor(R2,REVERSE,arr);
+		motor(L2,FORWARD,arr);
+		delay_ms(670);
 }
-void back(unsigned short arr)
+void back(u8 arr)
 {
 		motor(L1,REVERSE,arr/2);
 		motor(R1,REVERSE,arr/2);

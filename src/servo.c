@@ -22,8 +22,8 @@ void servo_config(){
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	
-	TIM_TimeBaseStructure.TIM_Period = ARR; //设置在下一个更新事件装入活动的自动重装载寄存器周期的值	 80K
-	TIM_TimeBaseStructure.TIM_Prescaler = PSC; //设置用来作为TIMx时钟频率除数的预分频值
+	TIM_TimeBaseStructure.TIM_Period = TIM_ARR; //设置在下一个更新事件装入活动的自动重装载寄存器周期的值	 80K
+	TIM_TimeBaseStructure.TIM_Prescaler = TIM_PSC; //设置用来作为TIMx时钟频率除数的预分频值
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0; //设置时钟分割:TDTS = Tck_tim
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  //TIM向上计数模式
 	TIM_TimeBaseInit(TIM1, &TIM_TimeBaseStructure); //根据TIM_TimeBaseInitStruct中指定的参数初始化TIMx的时间基数单位

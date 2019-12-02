@@ -85,7 +85,9 @@ static void delay_config(int32_t prescaler)
     while (SysTick_Config(SystemCoreClock / prescaler))
     {
         //printf("In function delay_config:SysTick_Config failed\n");
-			LED1 = 0;//等亮
     }
-		LED1 =1;//灯灭
+}
+//***********************************************************中断
+void SysTick_Handler(void){
+	timing_delay_decrement();
 }

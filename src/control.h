@@ -1,7 +1,8 @@
 #ifndef __CONTROL_H__
 #define __CONTROL_H__
 #include "finder.h"
-
+#include "config.h"
+#include "stm32f10x.h"
 typedef struct{
     volatile bool in_track;
     volatile bool in_node;
@@ -32,10 +33,10 @@ typedef enum{
 
 unsigned int PIDCalc(PID *pp, unsigned int NextPoint);
 void into_track(void);
-void forward(unsigned short speed);
-void left(unsigned short speed);
-void right(unsigned short speed);
-void back(unsigned short speed);
+void forward(u8 speed);
+void left(u8 speed);
+void right(u8 speed);
+void back(u8 speed);
 int catch_thing(void);
 int place_thing(void);
 
