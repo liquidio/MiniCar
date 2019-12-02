@@ -1,3 +1,5 @@
 MDK529 project
 
-使用的芯片为stm32f103rc，使用stdP pack。 
+开发环境MDK529,使用[Keil.STM32F1xx_DFP.2.3.0.pack](http://www.keil.com/dd2/Pack/)。
+
+使用的芯片为stm32f103rc。 
