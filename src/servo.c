@@ -1,5 +1,6 @@
 #include "servo.h"
-#include "stm32f10x.h"
+#include "stm32f10x_gpio.h"
+#include "stm32f10x_rcc.h"
 #include "config.h"
 /***************************************
  * 四路舵机初始化

@@ -4,29 +4,32 @@
 #include "delay.h"
 #include "ray.h"
 RunStatus Run_status;
-extern u8 Ray_cap;
 extern u8 ray,ray1,ray2,ray3;
 extern PStack goal;
+
+static void left(u8);
+static void right(u8);
+static void back(u8);
+
 /**************
 *状态检测RunStatus
 *
 **/
+u8 node = 0,pre_node_status = 0;
 void check_track(void){
-	if (Ray_cap == 0x6 ||
-		Ray_cap == 0x9 || 
-		//Ray_cap == 0xf ||
-		Ray_cap == 0xc ||
-		Ray_cap == 0x3 ||
-		Ray_cap == 0x7 ||
-		Ray_cap == 0xe){
-			Run_status.in_track = true;
-			Run_status.in_node = false;
-		}else if (Ray_cap == 0xf){
-			Run_status.in_node = true;
-	}
-	if (Ray_cap == 0){
-		Run_status.in_track = false;
-		Run_status.in_node = false;
+	if (ray){
+		Run_status.in_node = true;
+		pre_node_status = 1;
+	}else Run_status.in_node = false;
+	if (!ray1 && !ray2){
+		Run_status.in_track = true;
+	}else Run_status.in_track = false;
+	
+	if (Run_status.in_node == false){
+		if (pre_node_status){
+			node ++;
+			pre_node_status = 0;
+		}
 	}
 }
 void check_finish(Position pos,Position Agoal){
@@ -38,20 +41,11 @@ void check_finish(Position pos,Position Agoal){
 		Run_status.has_finish = true;
 	}
 }
-/***************************
- * 进入赛道
- * */
-void into_track(void)
-{
-    forward(SLOW_SPEED);
-    while (!Run_status.in_track){
-    }
-}
 /****************************
  * 方向控制，motor的包装
  * */
 static void offset_r(u8 arr){
-				motor(L1,FORWARD,arr);
+		motor(L1,FORWARD,arr);
 		motor(R1,FORWARD,0);
 		motor(L2,FORWARD,arr);
 		motor(R2,FORWARD,0);
@@ -68,8 +62,22 @@ static void offset_on(u8 arr){
 		motor(L2,FORWARD,arr);
 		motor(R2,FORWARD,arr);
 }
-void forward(u8 arr)//@TODO:未使用pid调节，
+PStack track;
+extern Position current;
+Position Agoal;
+void run(u8 arr)//@TODO:未使用pid调节，
 {	
+	Turn next;
+	Position Agoal_t;
+	if (is_equal_pos(current,Agoal)){
+		if (goal.top)
+			Agoal = goal.data[goal.top--];
+	}
+	if (track.top == 0){
+		track = a_star(current,Agoal);
+	}else {
+		Agoal_t = track.data[track.top--];
+	}
 	ray_scan();
 	if(!ray1 && !ray2){
 		offset_on(arr);
@@ -81,27 +89,41 @@ void forward(u8 arr)//@TODO:未使用pid调节，
 	if (ray1 && !ray2){
 		offset_r(arr);
 	}
-	if (!ray && !ray3){
-		right(arr);
+	if (!ray || !ray3){
+		pre_node_status = 1;	
+	}else if (ray || ray3){
+		if (pre_node_status){
+			node ++;//经过的节点数
+			current.x = Agoal.x;//@TODO:更新CURRENT
+			current.y = Agoal.y;
+			pre_node_status = 0;
+			next = direction_clac(&track,Agoal_t);
+			if (next == RIGHT){
+				right(arr);
+			}
+			if (next == LEFT){
+				left(arr);
+			}
+		}
 	}
 }
-void left(u8 arr)
+static void left(u8 arr)
 {
 		motor(L1,REVERSE,arr);
 		motor(R1,FORWARD,arr);
 		motor(L2,REVERSE,arr);
 		motor(R2,FORWARD,arr);
-	delay_ms(670);//空车转90,不带抓
+	delay_ms(TURN_LEFT_K);
 }
-void right(u8 arr)
+static void right(u8 arr)
 {
 		motor(R1,REVERSE,arr);
 		motor(L1,FORWARD,arr);
 		motor(R2,REVERSE,arr);
 		motor(L2,FORWARD,arr);
-		delay_ms(670);
+		delay_ms(TURN_RIGHT_K);
 }
-void back(u8 arr)
+static void back(u8 arr)
 {
 		motor(L1,REVERSE,arr/2);
 		motor(R1,REVERSE,arr/2);
@@ -155,39 +177,6 @@ Turn direction_clac(PStack* track,Position current)
     }
 	}
 }
-/************************************************
- * 运行控制(主控)
- * 
- * **/
-void run()
-{
-    Turn next;
-		Position Agoal = goal.data[goal_index];
-		PStack track ={0};
-		check_finish(current,Agoal);
-		if(Run_status.reach_goal == goal_index){
-			track.top = 0;
-			track = a_star(current,Agoal);
-			goal_index ++;
-		}else if (Run_status.in_node &&
-				!(Run_status.reach_goal == goal_index)){
-			next = direction_clac(&track,Agoal);
-		}else if (Run_status.has_finish){
-			
-		}
-    if (Run_status.in_node){
-				forward(SLOW_SPEED);
-				if (next == RIGHT){
-					right(MEDIUM_SPEED);
-				}
-				if (next == LEFT){
-					left(MEDIUM_SPEED);
-				}
-    }else{
-        forward(MEDIUM_SPEED);
-    }
-}
-
 /*****************************************************************
  * pid计算函数
  * */

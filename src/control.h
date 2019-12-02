@@ -31,16 +31,13 @@ typedef enum{
 	RIGHT,
 	}Turn;
 
-unsigned int PIDCalc(PID *pp, unsigned int NextPoint);
+Turn direction_clac(PStack* track,Position current);
 void into_track(void);
-void forward(u8 speed);
-void left(u8 speed);
-void right(u8 speed);
-void back(u8 speed);
+void stop(void);
 int catch_thing(void);
 int place_thing(void);
 
-void run(void);
+void run(u8);
 
 void check_finish(Position pos,Position Agoal);
 void check_track(void);
