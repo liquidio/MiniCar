@@ -6,6 +6,7 @@
 #include "delay.h"
 #include "ray.h"
 #include "sonar.h"
+#include "servo.h"
 
 //#define DEBUG
 extern PStack goal;
@@ -15,6 +16,7 @@ int main(void){
 	motor_config();
 	ray_config();
 	sonar_config();
+	servo_config();
 	while(1){
 		run(75);
 	}

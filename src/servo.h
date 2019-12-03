@@ -4,11 +4,11 @@
 void servo_config(void);
 
 typedef enum {
-    R4,
-    R3,
-    R1,
-    R2
+	S1,
+	S2,
+	S3,
+	S4,
 }Servo;
-
+//deg(0.015*2e4,0.025*2e4)
 void servo(Servo ste,u16 deg);
 #endif

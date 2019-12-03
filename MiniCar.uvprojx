@@ -403,6 +403,16 @@
               <FilePath>.\src\finder_test.c</FilePath>
             </File>
             <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>device</GroupName>
+          <Files>
+            <File>
               <FileName>key.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\key.c</FilePath>
@@ -411,11 +421,6 @@
               <FileName>led.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\led.c</FilePath>
-            </File>
-            <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\src\main.c</FilePath>
             </File>
             <File>
               <FileName>motor.c</FileName>

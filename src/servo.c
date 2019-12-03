@@ -23,8 +23,8 @@ void servo_config(){
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	
-	TIM_TimeBaseStructure.TIM_Period = TIM_ARR; //设置在下一个更新事件装入活动的自动重装载寄存器周期的值	 80K
-	TIM_TimeBaseStructure.TIM_Prescaler = TIM_PSC; //设置用来作为TIMx时钟频率除数的预分频值
+	TIM_TimeBaseStructure.TIM_Period = 2e4-1; //设置在下一个更新事件装入活动的自动重装载寄存器周期的值20ms
+	TIM_TimeBaseStructure.TIM_Prescaler = 72-1; //设置用来作为TIMx时钟频率除数的预分频值
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0; //设置时钟分割:TDTS = Tck_tim
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  //TIM向上计数模式
 	TIM_TimeBaseInit(TIM1, &TIM_TimeBaseStructure); //根据TIM_TimeBaseInitStruct中指定的参数初始化TIMx的时间基数单位
@@ -54,16 +54,16 @@ void servo_config(){
  * need_arr:重装载值。
  * */
 void servo(Servo ste,u16 need_arr){
-	if(ste == R1){
+	if(ste == S1){
 		TIM_SetCompare1(TIM1,need_arr);
 	}
-	if (ste == R2){
+	if (ste == S2){
 		TIM_SetCompare2(TIM1,need_arr);
 	}
-	if (ste == R3){
+	if (ste == S3){
 		TIM_SetCompare3(TIM1,need_arr);
 	}
-	if (ste == R4){
+	if (ste == S4){
 		TIM_SetCompare4(TIM1,need_arr);
 	}
 }

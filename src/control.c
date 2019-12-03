@@ -4,6 +4,7 @@
 #include "delay.h"
 #include "ray.h"
 #include "sonar.h"
+#include "servo.h"
 
 static void left(u8);
 static void right(u8);
@@ -164,20 +165,39 @@ void stop(){
 		motor(R2,STOP,0);
 }
 /**********************
-*爪取操作
-*@TODO：尚未开始写
+*爪取
+*收爪
+*@TODO：参数未调
 **/
 int catch_thing(void)
 {
-	back(50);//此处可能用到back
+	servo(S2,0.016*(2e4-1));
+	servo(S3,0.016*(2e4-1));
+	servo(S4,0.016*(2e4-1));
 	return 0;
 }
 int place_thing(void)
 {
+	servo(S2,0.021*(2e4-1));
+	servo(S3,0.021*(2e4-1));
+	servo(S4,0.021*(2e4-1));
 	return 0;
 }
+static u8 hand_deg = 0;
 
-//转向计算
+//机械爪旋转
+static void hand_left(void){
+	servo(S1,0.015*(2e4-1));//0.015的占空比
+	delay_ms(500);
+	hand_deg --;
+}
+static void hand_right(void){
+	servo(S1,0.025*(2e4-1));//0.025的占空比
+	delay_ms(500);
+	hand_deg ++;
+}
+
+//车身转向计算
 extern PStack goal;
 extern Position current;
 extern Position pos_nil;
