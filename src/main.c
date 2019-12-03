@@ -16,7 +16,7 @@
 Position Agoal,Agoal_t;
 u8 map_new = 0,pre_node_status = 0;
 PStack track;
-float distance = 0.0;
+float distance = 2e4;
 
 int main(void){
 	u16 arr = 75;
@@ -25,7 +25,7 @@ int main(void){
 	motor_config();
 	ray_config();
 	sonar_config();
-	servo_config();
+	//servo_config();
 	while(1){
 			if (is_equal_pos(current,Agoal)){//从目标栈里获取目标地点
 				if (goal.top)
@@ -39,7 +39,7 @@ int main(void){
 			}
 			
 			ray_scan();//红外扫描(20ms)
-			distance = sonar_scan_barrier();//超声波扫描;最长10ms
+			//distance = sonar_scan_barrier();//超声波扫描;最长10ms
 			
 			if (distance < 2e-1){
 				//将障碍物位置记录到地图并，并重新计算路径

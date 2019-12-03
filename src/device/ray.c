@@ -16,18 +16,10 @@ void ray_config(void){
 
  	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB|RCC_APB2Periph_GPIOC, ENABLE);  //使能GPIO外设时钟使能                                                        	
 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_8|GPIO_Pin_11;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4|GPIO_Pin_6|GPIO_Pin_8;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
-	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3|GPIO_Pin_5|GPIO_Pin_7;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12|GPIO_Pin_11;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
-	GPIO_Init(GPIOC, &GPIO_InitStructure);
 	
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
@@ -35,17 +27,37 @@ void ray_config(void){
 	
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
 	GPIO_Init(GPIOC, &GPIO_InitStructure);
+	
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3|GPIO_Pin_5|GPIO_Pin_7|GPIO_Pin_9;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12|GPIO_Pin_11;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
+	GPIO_Init(GPIOC, &GPIO_InitStructure);
+	
+
 }
 /***********
  * 红外捕获
  * */
 u8 Ray_cap;
 u8 ray,ray1,ray2,ray3;
+u8 side,side1;
 void  ray_scan(void){
 		ray = 1;
 	ray1 = 1;
 	ray2 =1;
 	ray3 =1;
+	side = 1;side1 =1;
+	GPIO_ResetBits(GPIOD,GPIO_Pin_3);
+	delay_ms(5);
+	if (GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_3)){
+		side = 0;
+	}
+	if (GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_9)){
+		side1 = 0;
+	}
 	GPIO_ResetBits(GPIOD,GPIO_Pin_2);
 	GPIO_SetBits(GPIOC,GPIO_Pin_11);
 	GPIO_SetBits(GPIOB,GPIO_Pin_6);
