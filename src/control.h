@@ -4,13 +4,6 @@
 #include "config.h"
 #include "stm32f10x.h"
 typedef struct{
-    volatile bool in_track;
-    volatile bool in_node;
-    volatile bool has_finish;
-    volatile int reach_goal;
-}RunStatus;
-
-typedef struct{
     volatile bool has_catch;
     volatile bool has_obstacle;
     volatile unsigned char ray_cap;
@@ -27,19 +20,17 @@ typedef struct{
 }PID;
 
 typedef enum{
-	LEFT,
-	RIGHT,
+	TURN_LEFT,
+	TURN_RIGHT,
+	ON_CHG,
+	TURN_BACK
 	}Turn;
 
 Turn direction_clac(PStack* track,Position current);
-void into_track(void);
 void stop(void);
 int catch_thing(void);
 int place_thing(void);
 
 void run(u8);
-
-void check_finish(Position pos,Position Agoal);
-void check_track(void);
 
 #endif

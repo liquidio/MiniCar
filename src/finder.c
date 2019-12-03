@@ -44,7 +44,6 @@ void goal_mirror(void) {
 		goal.data[i].x = 9 - goal.data[i].x;
 	}
 }
-extern  bool check_unknow_position(Position);
 //scan open_set获取当前位置的四个方向的有效值
 void set_open_set(PStack* open_set,PStack* close_set,Position start)
 {

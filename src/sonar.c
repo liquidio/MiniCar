@@ -11,7 +11,7 @@
 #include "delay.h"
 
 #define SONAR_SOUND_SPEED 340    ///<声音的传播速度，单位为m/s
-#define SONAR_MAX_WAIT_TIME 60  ///<超声波最大等待时间为60ms，因为检测的距离不超过5米，来回所需的时间大约为30ms，60ms为其两倍的时间,可以根据实际缩短时间
+#define SONAR_MAX_WAIT_TIME 10  ///<超声波最大等待时间为60ms，因为检测的距离不超过5米，来回所需的时间大约为30ms，60ms为其两倍的时间,可以根据实际缩短时间,此处填10ms
 #define SONAR_INFINITE_TIME -1.0f ///<如果障碍物的距离超过检测的范围就返回无限时间
 
 static void sonar_rcc_config(void);

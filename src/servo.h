@@ -10,5 +10,5 @@ typedef enum {
     R2
 }Servo;
 
-void servo(Servo ste,u8 deg);
+void servo(Servo ste,u16 deg);
 #endif

@@ -53,12 +53,7 @@ void servo_config(){
  * 控制舵机位置
  * need_arr:重装载值。
  * */
-void servo(Servo ste,u8 deg){
-	u16 need_arr;
-	if (deg>180){
-		deg = 180;
-	}
-	need_arr = deg*K_deg;
+void servo(Servo ste,u16 need_arr){
 	if(ste == R1){
 		TIM_SetCompare1(TIM1,need_arr);
 	}
