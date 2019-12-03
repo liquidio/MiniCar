@@ -338,7 +338,7 @@
               <MiscControls>--diag_suppress=1</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\src</IncludePath>
+              <IncludePath>.\src;.\src\device</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -383,11 +383,6 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
-              <FileName>control.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\src\control.c</FilePath>
-            </File>
-            <File>
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\delay.c</FilePath>
@@ -407,6 +402,21 @@
               <FileType>1</FileType>
               <FilePath>.\src\main.c</FilePath>
             </File>
+            <File>
+              <FileName>hand.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\hand.c</FilePath>
+            </File>
+            <File>
+              <FileName>pid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\pid.c</FilePath>
+            </File>
+            <File>
+              <FileName>turn.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\turn.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -415,37 +425,37 @@
             <File>
               <FileName>key.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\key.c</FilePath>
+              <FilePath>.\src\device\key.c</FilePath>
             </File>
             <File>
               <FileName>led.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\led.c</FilePath>
+              <FilePath>.\src\device\led.c</FilePath>
             </File>
             <File>
               <FileName>motor.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\motor.c</FilePath>
+              <FilePath>.\src\device\motor.c</FilePath>
             </File>
             <File>
               <FileName>ray.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\ray.c</FilePath>
+              <FilePath>.\src\device\ray.c</FilePath>
             </File>
             <File>
               <FileName>servo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\servo.c</FilePath>
+              <FilePath>.\src\device\servo.c</FilePath>
             </File>
             <File>
               <FileName>sonar.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\sonar.c</FilePath>
+              <FilePath>.\src\device\sonar.c</FilePath>
             </File>
             <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\usart.c</FilePath>
+              <FilePath>.\src\device\usart.c</FilePath>
             </File>
           </Files>
         </Group>

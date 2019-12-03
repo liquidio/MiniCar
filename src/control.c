@@ -54,58 +54,7 @@ static	Position Agoal_t;//下一地点
 extern short int map[MAPSIZE_X][MAPSIZE_Y];
 void run(u8 arr)//@TODO:未使用pid调节，
 {	
-	if (is_equal_pos(current,Agoal)){//从目标栈里获取目标地点
-		if (goal.top)
-			Agoal = goal.data[goal.top--];
-	}
-	if (track.top == 0 || map_new){//加载到达目的路径
-		track = a_star(current,Agoal);
-		if (map_new) map_new = 0;
-	}else {
-		Agoal_t = track.data[track.top--];//下一地点
-	}
-	
-	ray_scan();//红外扫描(20ms)
-	distance = sonar_scan_barrier();//超声波扫描;最长10ms
-	
-	if (distance < 2e-1){
-		//将障碍物位置记录到地图并，并重新计算路径
-		map[track.data[track.top--].x][track.data[track.top--].y] = -1;
-		map_new = 1;
-		return;
-	}
-	
-	//初始
-	if(!ray1 && !ray2){
-		offset_on(arr);
-		
-	}
-	if (!ray1 && ray2){
-		offset_l(arr);
-	}
-	if (ray1 && !ray2){
-		offset_r(arr);
-	}
-	if (!ray || !ray3){
-		pre_node_status = 1;
-	}else if (ray || ray3){
-		if (pre_node_status){
-			current.x = Agoal.x;//更新CURRENT
-			current.y = Agoal.y;
-			pre_node_status = 0;
-			next = direction_clac(&track,Agoal_t);//查取转向
-			if (next == TURN_RIGHT){//右转90deg
-				right(arr);
-			}else
-			if (next == TURN_LEFT){//左转90deg
-				left(arr);
-				}else
-			if (next == TURN_BACK){
-				left(arr);
-				left(arr);
-			}
-			}
-	}
+
 }
 static void left(u8 arr)
 {
@@ -201,46 +150,7 @@ static void hand_right(void){
 extern PStack goal;
 extern Position current;
 extern Position pos_nil;
-static int goal_index = 0,node_index = 0;
 
-Turn direction_clac(PStack* track,Position current)
-{
-  short int x, y;
-	if ( node_index < track->top){
-    x = track->data[goal_index].x - current.x;
-    y = track->data[goal_index++].y - current.y;
-    if (x ^ y)//转向对照表
-    {
-        if (x >0){
-					//next direction = 90;
-					if(direction == 0) return TURN_LEFT;
-					if(direction == 90) return ON_CHG;
-					if(direction == 180) return TURN_RIGHT;
-					if(direction == 270) return TURN_BACK;
-				}else if(x <0){
-					//next direction = 270;
-					if(direction == 0) return TURN_RIGHT;
-					if(direction == 90) return TURN_BACK;
-					if(direction == 180) return TURN_LEFT;
-					if(direction == 270) return ON_CHG;
-				}
-				if (y>0){
-					//next direction = 0;
-					if(direction == 0) return ON_CHG;
-					if(direction == 90) return TURN_LEFT;
-					if(direction == 180) return TURN_BACK;
-					if(direction == 270) return TURN_RIGHT;
-				}else if (y<0){
-					//next direction = 180;
-					if(direction == 0) return TURN_BACK;
-					if(direction == 90) return TURN_RIGHT;
-					if(direction == 180) return ON_CHG;
-					if(direction == 270) return TURN_LEFT;
-				}
-    }
-	}
-	return ON_CHG;
-}
 /*****************************************************************
  * pid计算函数
  * */

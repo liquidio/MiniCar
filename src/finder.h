@@ -32,7 +32,13 @@ typedef struct POSITIONCHECK{
 	int g_score;
 	int h_score;
 }PositionCheck;
+
 extern PStack *run_set;
+extern Position current;
+extern PStack goal;
+extern const Position pos_nil;
+extern short int  map[MAPSIZE_X][MAPSIZE_Y];
+
 PStack a_star(Position start,Position goal);
 //构建一个Position
 Position make_pos(int x, int y);
