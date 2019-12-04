@@ -28,7 +28,7 @@ void ray_config(void){
 	GPIO_Init(GPIOC, &GPIO_InitStructure);
 	
 	//gpio检测	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5|GPIO_Pin_7|GPIO_Pin_9|GPIO_Pin_10;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5|GPIO_Pin_7|GPIO_Pin_9|GPIO_Pin_3;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 	
