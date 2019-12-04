@@ -232,6 +232,10 @@
       <pMultCmdsp></pMultCmdsp>
       <SystemViewers>
         <Entry>
+          <Name>System Viewer\GPIOA</Name>
+          <WinId>35903</WinId>
+        </Entry>
+        <Entry>
           <Name>System Viewer\GPIOB</Name>
           <WinId>35905</WinId>
         </Entry>
